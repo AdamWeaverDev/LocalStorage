@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using System.Linq;
 using System.Text.Json;
 using Blazored.LocalStorage.JsonConverters;
@@ -28,7 +29,7 @@ namespace Blazored.LocalStorage.Tests.LocalStorageServiceTests
         }
 
         [Fact]
-        public void ReturnsKeysAsync()
+        public async Task ReturnsKeysAsync()
         {
             // Arrange
             const string key1 = "TestKey1";
@@ -42,7 +43,7 @@ namespace Blazored.LocalStorage.Tests.LocalStorageServiceTests
             _sut.SetItem(key2, item2);
 
             // Act
-            var keyNames = _sut.KeysAsync().Result.ToList();
+            var keyNames = (await _sut.KeysAsync()).ToList();
 
             // Assert
             Assert.Collection(keyNames, 
@@ -74,13 +75,13 @@ namespace Blazored.LocalStorage.Tests.LocalStorageServiceTests
         }
 
         [Fact]
-        public void ReturnsEmptyWhenCollectionEmptyAsync()
+        public async Task ReturnsEmptyWhenCollectionEmptyAsync()
         {
             // Arrange
             _sut.Clear();
 
             // Act
-            var keyNames = _sut.KeysAsync().Result;
+            var keyNames = await _sut.KeysAsync();
 
             // Assert
             Assert.Empty(keyNames);
@@ -100,7 +101,7 @@ namespace Blazored.LocalStorage.Tests.LocalStorageServiceTests
         }
 
         [Fact]
-        public void RemoveKeysAsync()
+        public async Task RemoveKeysAsync()
         {
             // Arrange
             const string key1 = "TestKey1";
@@ -118,7 +119,7 @@ namespace Blazored.LocalStorage.Tests.LocalStorageServiceTests
 
             // Act
             var keyNames = new string[] { key1, key2 };
-            _sut.RemoveItemsAsync(keyNames).AsTask().Wait();
+            await _sut.RemoveItemsAsync(keyNames);
 
             // Assert
             Assert.Equal(1, _sut.Length());

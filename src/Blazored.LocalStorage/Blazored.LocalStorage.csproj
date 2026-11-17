@@ -4,7 +4,7 @@
     <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
     <Nullable>enable</Nullable>
 
-    <Authors>Chris Sainty</Authors>
+    <Authors>Chris Sainty;AdamWeaverDev</Authors>
     <Company>Chris Sainty</Company>
     <Copyright>Copyright 2020 (c) Chris Sainty. All rights reserved.</Copyright> 
     <Description>A library to provide access to local storage in Blazor applications</Description>
@@ -16,10 +16,10 @@
     <PackageId>Blazored.LocalStorage</PackageId>
     <PackageTags>Blazored;Blazor;Razor;Components;LocalStorage;Local Storage;ASP.NET Core;CSharp;Web</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/Blazored/LocalStorage</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AdamWeaverDev/LocalStorage</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/Blazored/LocalStorage</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AdamWeaverDev/LocalStorage</RepositoryUrl>
 
     <!-- SourceLink settings -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
