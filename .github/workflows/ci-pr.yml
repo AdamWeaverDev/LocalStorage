@@ -10,15 +10,22 @@ env:
       11.0.x
     PROJECT_NAME: Blazored.LocalStorage
 
+permissions:
+  contents: read
+
 jobs:
   build:
-    name: Build and test
+    name: Build and test (${{ matrix.framework }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        framework: [ net10.0, net11.0 ]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
 
     - name: Setting up .NET Core SDK ${{ env.NETCORE_VERSION }}...
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v6
       with:
         dotnet-version: ${{ env.NETCORE_VERSION }}
 
@@ -32,4 +39,7 @@ jobs:
       run: dotnet build -c Release --no-restore src/$PROJECT_NAME.TestExtensions/$PROJECT_NAME.TestExtensions.csproj
 
     - name: Testing...
-      run: dotnet test -c Release --no-restore --verbosity normal tests/$PROJECT_NAME.Tests
+      run: dotnet test -c Release --no-restore -f ${{ matrix.framework }} --verbosity normal tests/$PROJECT_NAME.Tests
+
+    - name: Test bUnit example
+      run: dotnet test -c Release --no-restore -f ${{ matrix.framework }} --verbosity normal samples/bUnitExample
