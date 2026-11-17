@@ -23,7 +23,7 @@ namespace Blazored.LocalStorage
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
 
-            var e = await RaiseOnChangingAsync<T>(key, data).ConfigureAwait(false);
+            var e = await RaiseOnChangingAsync<T>(key, data, cancellationToken).ConfigureAwait(false);
 
             if (e.Cancel)
                 return;
@@ -42,7 +42,7 @@ namespace Blazored.LocalStorage
             if (data is null)
                 throw new ArgumentNullException(nameof(data));
 
-            var e = await RaiseOnChangingAsync<string>(key, data).ConfigureAwait(false);
+            var e = await RaiseOnChangingAsync<string>(key, data, cancellationToken).ConfigureAwait(false);
 
             if (e.Cancel)
                 return;
@@ -106,7 +106,12 @@ namespace Blazored.LocalStorage
             => _storageProvider.ContainKeyAsync(key, cancellationToken);
 
         public ValueTask RemoveItemsAsync(IEnumerable<string> keys, CancellationToken cancellationToken = default)
-            => _storageProvider.RemoveItemsAsync(keys, cancellationToken);
+        {
+            if (keys == null)
+                throw new ArgumentNullException(nameof(keys));
+
+            return _storageProvider.RemoveItemsAsync(keys, cancellationToken);
+        }
 
         public IEnumerable<string> Keys()
         {
@@ -208,12 +213,12 @@ namespace Blazored.LocalStorage
             => _storageProvider.ContainKey(key);
 
         public event EventHandler<ChangingEventArgs>? Changing;
-        private async Task<ChangingEventArgs> RaiseOnChangingAsync<T>(string key, object? data)
+        private async Task<ChangingEventArgs> RaiseOnChangingAsync<T>(string key, object? data, CancellationToken cancellationToken)
         {
             var e = new ChangingEventArgs
             {
                 Key = key,
-                OldValue = await GetItemInternalAsync<T>(key).ConfigureAwait(false),
+                OldValue = await GetItemInternalAsync<T>(key, cancellationToken).ConfigureAwait(false),
                 NewValue = data
             };
 
@@ -236,7 +241,7 @@ namespace Blazored.LocalStorage
             return e;
         }
 
-        private async Task<T?> GetItemInternalAsync<T>(string key, CancellationToken cancellationToken = default)
+        private async Task<object?> GetItemInternalAsync<T>(string key, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
@@ -251,7 +256,7 @@ namespace Blazored.LocalStorage
             }
             catch (JsonException)
             {
-                return (T)(object)serialisedData;
+                return serialisedData;
             }
         }
 
