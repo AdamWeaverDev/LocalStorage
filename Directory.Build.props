@@ -2,9 +2,16 @@
 <Project>
 
   <PropertyGroup Label="Package Versions">
-    <DotNet6Version>6.0.0</DotNet6Version>
-    <DotNet7Version>7.0.0</DotNet7Version>
-    <DotNet8Version>8.0.0</DotNet8Version>
+    <DotNet10Version>10.0.15</DotNet10Version>
+    <DotNet11Version>11.0.0</DotNet11Version>
+  </PropertyGroup>
+
+  <!-- Resolves to the framework package line matching the current target framework -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <DotNetVersion>$(DotNet10Version)</DotNetVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net11.0'">
+    <DotNetVersion>$(DotNet11Version)</DotNetVersion>
   </PropertyGroup>
 
 </Project>

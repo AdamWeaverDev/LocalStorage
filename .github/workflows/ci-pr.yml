@@ -5,7 +5,9 @@ on:
     branches: [ main ]
 
 env:
-    NETCORE_VERSION: '8.0.100'
+    NETCORE_VERSION: |
+      10.0.x
+      11.0.x
     PROJECT_NAME: Blazored.LocalStorage
 
 jobs:
@@ -16,7 +18,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Setting up .NET Core SDK ${{ env.NETCORE_VERSION }}...
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.NETCORE_VERSION }}
 

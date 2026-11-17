@@ -3,6 +3,8 @@
 ![Build & Test Main](https://github.com/Blazored/LocalStorage/workflows/Build%20&%20Test%20Main/badge.svg)
 
 # Blazored LocalStorage
+
+> This is a fork maintained by AdamWeaverDev. The original author is Chris Sainty ([Blazored/LocalStorage](https://github.com/Blazored/LocalStorage)), and this fork remains under the MIT licence.
 Blazored LocalStorage is a library that provides access to the browsers local storage APIs for Blazor applications. An additional benefit of using this library is that it will handle serializing and deserializing values when saving or retrieving them.
 
 ## Breaking Changes (v3 > v4)
